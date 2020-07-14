@@ -1,63 +1,39 @@
-var express = require("express");
-var path = require("path");
+const express = require("express");
+const path = require("path");
+const fs = require("fs");
+const app = express();
+const bodyParser = require("body-parser");
 
-// Sets up the Express App
-// =============================================================
-var app = express();
-var PORT = 3000;
+const log = console.log;
 
-// Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.json());
+app.use(bodyParser());
 
-
-// Routes
-// =============================================================
-
-// Basic route that sends the user first to the AJAX Page
-app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "../index.html"));
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/index.html'));
+    //res.json("App is working!");
 });
 
-app.get("/notes", function(req, res) {
-  res.sendFile(path.join(__dirname, "../notes.html"));
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/notes.html'));
+    // res.json("You are viewing the notes file");
 });
 
-// Displays all notes
-app.get("/api/notes", function(req, res) {
-  return res.json(notes);
-});
+app.get("/api/notes", (req, res) => {
+    return res.send(dataBase);
+  });
 
-// Displays a single note, or returns false
-app.get("/api/notes/:note", function(req, res) {
-  var chosen = req.params.notes;
+app.post('/api/notes', (req, res) => {
+    
+    console.log('/api/notes', req.body);
 
-  console.log(chosen);
+    res.json("My response is working");
+  });
 
-  for (var i = 0; i < notes.length; i++) {
-    if (chosen === notes[i].routeName) {
-      return res.json(notes[i]);
-    }
-  }
+app.get('*', (req, res) => {
+    res.json("Sorry this is not a webpage!");
+})
 
-  return res.json(false);
-});
-
-// Create New Notes - takes in JSON input
-app.post("/api/notes", function(req, res) {
-  // req.body hosts is equal to the JSON post sent from the user
-  // This works because of our body parsing middleware
-  var newNote = req.body;
-
-  console.log(newNote);
-
-  characters.push(newNote);
-
-  res.json(newNote);
-});
-
-// Starts the server to begin listening
-// =============================================================
-app.listen(PORT, function() {
-  console.log("App listening on PORT " + PORT);
-});
+app.listen(8080, () => log("App is running at port ", 8080));
