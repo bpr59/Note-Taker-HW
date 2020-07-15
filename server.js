@@ -11,14 +11,16 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.json());
 app.use(bodyParser());
 
+let dataBase = fs.readFileSync("./db/db.json","utf-8");
+console.log("database:", dataBase)
+dataBase ? dataBase = JSON.parse(dataBase) : dataBase = [];
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'));
-    //res.json("App is working!");
 });
 
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'));
-    // res.json("You are viewing the notes file");
 });
 
 app.get("/api/notes", (req, res) => {
@@ -26,14 +28,18 @@ app.get("/api/notes", (req, res) => {
   });
 
 app.post('/api/notes', (req, res) => {
-    
-    console.log('/api/notes', req.body);
+    let body = req.body;
+    let noteId = {"id":Math.round(Math.random()* 999)};
+    body = {...noteId,...body}
 
-    res.json("My response is working");
+    console.log(body);
+
+    dataBase.push(body);
+    fs.writeFileSync("./db/db.json", JSON.stringify(dataBase), "utf-8");
   });
 
 app.get('*', (req, res) => {
-    res.json("Sorry this is not a webpage!");
+    res.sendFile(path.join(__dirname, '/public/error.html'));  
 })
 
 app.listen(8080, () => log("App is running at port ", 8080));
