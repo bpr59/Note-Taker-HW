@@ -13,7 +13,7 @@ app.use(bodyParser());
 
 let dataBase = fs.readFileSync("./db/db.json","utf-8");
 
-console.log("database:", dataBase)
+log("database:", dataBase)
 
 dataBase ? dataBase = JSON.parse(dataBase) : dataBase = [];
 
@@ -34,25 +34,24 @@ app.post('/api/notes', (req, res) => {
     let noteId = {"id":Math.round(Math.random()* 9999)};
     body = {...noteId,...body}
 
-    console.log(body);
+    log(body);
 
     dataBase.push(body);
     fs.writeFileSync("./db/db.json", JSON.stringify(dataBase), "utf-8");
   });
 
+// --------------------------------------------------------------
 app.delete('api/notes/:id', (req, res) => {
-    let requestId = req.params.id;
 
-    let note = notes.filter(note => {
-      return note.id == requestId;
-    }) [0];
-
-    const index = notes.indexOf(note);
-
-    notes.splice(index, 1);
-
-    fs.writeFileSync("./db/db.json", "[]", "utf-8");
-});
+    dataBase.query('DELETE FROM Notes WHERE NoteID = ?',[req.params.id],(err)=>{
+      if(!err)
+      res.send('Note deleted.');
+      else
+      log(err);
+    })
+    fs.writeFileSync("./db/db.json", JSON.stringify(dataBase), "utf-8");
+  });
+// ----------------------------------------------------------
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/error.html'));  
