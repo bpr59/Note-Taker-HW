@@ -3,6 +3,7 @@ const path = require("path");
 const fs = require("fs");
 const app = express();
 const bodyParser = require("body-parser");
+// const { notStrictEqual } = require("assert");
 
 const log = console.log;
 
@@ -13,7 +14,7 @@ app.use(bodyParser());
 
 let dataBase = fs.readFileSync("./db/db.json","utf-8");
 
-log("database:", dataBase)
+// log("database:", dataBase)
 
 dataBase ? dataBase = JSON.parse(dataBase) : dataBase = [];
 
@@ -34,24 +35,32 @@ app.post('/api/notes', (req, res) => {
     let noteId = {"id":Math.round(Math.random()* 9999)};
     body = {...noteId,...body}
 
-    log(body);
-
     dataBase.push(body);
     fs.writeFileSync("./db/db.json", JSON.stringify(dataBase), "utf-8");
   });
 
-// --------------------------------------------------------------
-app.delete('api/notes/:id', (req, res) => {
-
-    dataBase.query('DELETE FROM Notes WHERE NoteID = ?',[req.params.id],(err)=>{
-      if(!err)
-      res.send('Note deleted.');
-      else
-      log(err);
-    })
-    fs.writeFileSync("./db/db.json", JSON.stringify(dataBase), "utf-8");
-  });
 // ----------------------------------------------------------
+
+app.delete('/api/notes/:id',(req, res) => {
+
+    var id = req.params.id ;
+
+    console.log(id);
+
+  fs.readFile("./db/db.json", (err,dataBase) => {
+        dataBase = JSON.parse( dataBase );
+
+    console.log(dataBase);
+
+  delete dataBase[id];
+  
+  console.log(JSON.stringify(dataBase));
+
+  res.send('Note was deleted');
+  });
+
+  fs.writeFileSync("./db/db.json", JSON.stringify(dataBase), "utf-8");
+});
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/error.html'));  
