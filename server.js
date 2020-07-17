@@ -41,26 +41,21 @@ app.post('/api/notes', (req, res) => {
 
 // ----------------------------------------------------------
 
-app.delete('/api/notes/:id',(req, res) => {
-
-    var id = req.params.id ;
-
-    console.log(id);
-
-  fs.readFile("./db/db.json", (err,dataBase) => {
-        dataBase = JSON.parse( dataBase );
-
-    console.log(dataBase);
-
-  delete dataBase[id];
+app.delete("/api/notes/:id", (req, res) => {
   
-  console.log(JSON.stringify(dataBase));
+  let id = req.params.id;
+  let notes = dataBase;
 
-  res.send('Note was deleted');
-  });
+  for(let i = 0; i < notes.length; i++){
 
+      if(notes[i].id == id){
+          notes.splice(i, 1);
+          res.send("deleted");
+      }
+  }
   fs.writeFileSync("./db/db.json", JSON.stringify(dataBase), "utf-8");
 });
+// ----------------------------------------------------------
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/error.html'));  
