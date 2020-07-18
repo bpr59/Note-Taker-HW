@@ -26,18 +26,18 @@ Create an application that can be used to write, save, and delete notes. This ap
   - Run server.js file in terminal via node server.js
   - From homepage, click "Get Started" which will take you to the input page. 
 
-  <img src="images/SS-HomePage.png">
+  <img src="public/assets/css/images/SS-HomePage.png">
 
   - In input page, you can add a new note by adding a title and text.
   - Next step is to save the note and request a new note template.
   - The saved note can be seen on the sidebar once the user refreshes the page.
 
-  <img src="images/SS-InputPage.png">
+  <img src="public/assets/css/images/SS-InputPage.png">
 
   - A completed process would be to delete the note on the sidebar by using the trashcan icon.
   - Finally, a wrong LocalHost URL address will respond with a 404 page.
 
-  <img src="images/SS-404Page.png">
+  <img src="public/assets/css/images/SS-404Page.png">
     
 ### email: 
   - bpr59@comcast.net
