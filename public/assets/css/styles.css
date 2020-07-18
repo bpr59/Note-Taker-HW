@@ -69,9 +69,12 @@ html, body {
   cursor: pointer;
 }
 
-body {
-  background: #dedede;
+.errorPage {
+  background-image: url("./images/gears.png") !important;
+  /*background-color: red !important; */
 }
+
 .page-wrap {
   min-height: 100vh;
 }
+
