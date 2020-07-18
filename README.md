@@ -37,7 +37,7 @@ Create an application that can be used to write, save, and delete notes. This ap
   - A completed process would be to delete the note on the sidebar by using the trashcan icon.
   - Finally, a wrong LocalHost URL address will respond with a 404 page.
 
-  <img src="public/assets/css/images/SS-404Page.png">
+  <img src="public/assets/css/images/SS-404PageNew.png">
     
 ### email: 
   - bpr59@comcast.net
