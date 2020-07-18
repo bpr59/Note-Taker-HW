@@ -4,6 +4,8 @@ const path = require("path");
 const fs = require("fs");
 const app = express();
 const bodyParser = require("body-parser");
+var PORT = process.env.PORT || 8080;
+
 
 const log = console.log;
 
@@ -63,4 +65,4 @@ app.get('*', (req, res) => {
 })
 
 //localhost listening link and response to user
-app.listen(8080, () => log("App is running at port ", 8080));
+app.listen(PORT, () => log("App is running at port ", PORT));
