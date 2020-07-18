@@ -1,4 +1,4 @@
-# Team-Engine-Template
+# Note-Taker
 
 <img alt="npm" src="https://img.shields.io/npm/v/enquirer?style=flat-square"> <img alt="npm" src="https://img.shields.io/npm/v/jest?style=flat-square">  <img alt="NPM" src="https://img.shields.io/npm/l/express?style=flat-square">
     
